@@ -16,6 +16,8 @@ public class WebhookServiceApplication {
     CommandLineRunner start(SlackService slackService){
         return args -> {
             slackService.sendMessageToSlack("Bonjour , c'est le boot de notification ");
+            slackService.sendMessageToSlack("Comment alllez vous");
+
         };
     }
 }

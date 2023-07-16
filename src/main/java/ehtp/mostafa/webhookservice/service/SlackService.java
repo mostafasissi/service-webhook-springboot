@@ -1,6 +1,7 @@
 package ehtp.mostafa.webhookservice.service;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,13 +14,15 @@ import java.util.Map;
 @Service
 public class SlackService {
     private final RestTemplate restTemplate ;
+    @Value(value = "${hook.slack.url}")
+    private String url ;
 
     public SlackService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public void sendMessageToSlack(String message){
-        String url = "https://hooks.slack.com/services/T05HMBLSJ80/B05GR2806VC/hs76UVML25H7zfbtTF2WJWu" ;
+    public void sendMessageToSlack(String message)throws Exception{
+
         Map<String , String> messageBuilder = new HashMap<String , String>();
         HttpHeaders headers =  new HttpHeaders();
         // set the headers
@@ -27,5 +30,6 @@ public class SlackService {
         messageBuilder.put("text" , message) ;
         HttpEntity<Map<String , String >> request = new HttpEntity<>(messageBuilder , headers);
         restTemplate.postForEntity(url , request , String.class ) ;
+
     }
 }
